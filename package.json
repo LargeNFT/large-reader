@@ -1,6 +1,6 @@
 {
   "name": "large-reader",
-  "version": "0.0.20-alpha",
+  "version": "0.0.21-alpha",
   "description": "Generate a website for an NFT collection built with Large.",
   "repository": {
     "type": "git",
@@ -28,6 +28,6 @@
     "convert-svg-to-png": "0.6.4",
     "sharp": "0.31.3",
 
-    "large-nft": "^0.14.0"
+    "large-nft": "^0.16.0"
   }
 }
