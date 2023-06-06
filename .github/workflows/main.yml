@@ -7,7 +7,6 @@ on:
     paths:
       - 'backup/**'
 
-
 jobs:
   docker_command:
     runs-on: ubuntu-latest
@@ -19,3 +18,9 @@ jobs:
       - name: Build and run Docker container
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c "npm install -g ipfs-car && npx ipfs-car pack backup/ --output ipfs.car"
+
+      - name: Save .car file as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ipfs-car
+          path: ipfs.car
