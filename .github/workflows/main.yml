@@ -15,4 +15,4 @@ jobs:
 
       - name: Build and run Docker container
         run: |
-          docker run --rm -it -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c "npm install -g ipfs-car && npx ipfs-car pack folder/ --output dist/ipfs.car"
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c "npm install -g ipfs-car && npx ipfs-car pack folder/ --output dist/ipfs.car"
