@@ -7,6 +7,8 @@ on:
     paths:
       - 'backup/**'
 
+permissions: read-all|write-all
+
 jobs:
   docker_command:
     runs-on: ubuntu-latest
