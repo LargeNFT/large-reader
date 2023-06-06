@@ -1,0 +1,18 @@
+name: Docker Command on Commit
+
+on:
+  push:
+    paths:
+      - 'backup/*'
+
+jobs:
+  docker_command:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and run Docker container
+        run: |
+          docker run --rm -it -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c "npm install -g ipfs-car && npx ipfs-car pack folder/ --output dist/ipfs.car"
