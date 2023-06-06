@@ -15,9 +15,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Check commit message
+        id: check_commit_message
+        run: |
+          if git log --format=%B -n 1 ${{ github.sha }} | grep -q "Deleting backup"; then
+            echo "Commit message contains 'Deleting backup'. Skipping Docker command."
+            echo "::set-output name=skip::true"
+          else
+            echo "Commit message does not contain 'Deleting backup'. Proceeding with Docker command."
+            echo "::set-output name=skip::false"
+          fi
+
       - name: Build and run Docker container
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c "npm install -g ipfs-car && npx ipfs-car pack backup/ --output ipfs.car"
+          skip=${{ steps.check_commit_message.outputs.skip }}
+          if [ "$skip" == "false" ]; then
+            docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c "npm install -g ipfs-car && npx ipfs-car pack backup/ --output ipfs.car"
+          else
+            echo "Skipping Docker command."
+          fi
 
       - name: Save .car file as artifact
         uses: actions/upload-artifact@v2
