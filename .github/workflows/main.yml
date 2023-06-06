@@ -30,7 +30,7 @@ jobs:
         run: |
           skip=${{ steps.check_commit_message.outputs.skip }}
           if [ "$skip" == "false" ]; then
-            docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c "npm install -g ipfs-car && npx ipfs-car pack backup/ --output ipfs.car"
+            docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c "npm install -g ipfs-car && npx ipfs-car pack backup/export/ --output ipfs.car"
             git config --global user.name "GitHub Actions"
             git config --global user.email "actions@github.com"
             git add ipfs.car
