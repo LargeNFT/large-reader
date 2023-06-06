@@ -7,7 +7,7 @@ on:
     paths:
       - 'backup/**'
 
-permissions: read-all|write-all
+permissions: write-all
 
 jobs:
   docker_command:
