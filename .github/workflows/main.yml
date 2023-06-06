@@ -2,8 +2,11 @@ name: Docker Command on Commit
 
 on:
   push:
+    branches:
+      - master
     paths:
-      - 'backup/*'
+      - 'backup/**'
+
 
 jobs:
   docker_command:
