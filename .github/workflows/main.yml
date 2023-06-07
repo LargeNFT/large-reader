@@ -39,7 +39,7 @@ jobs:
             npm install multiformats &&
             npx ipfs-car pack backup/export/ --output dist/ipfs.car &&
             cid=$(npx ipfs-car roots dist/ipfs.car) &&
-            node getCid.js $cid
+            node getCid/index.js $cid
             '
 
             git config --global user.name "GitHub Actions"
