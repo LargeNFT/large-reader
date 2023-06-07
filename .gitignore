@@ -65,7 +65,6 @@ truffle/orbitdb/*
 truffle/keys/*
 !truffle/orbitdb/.keep
 
-dist/*
 yarn.lock
 package-lock.json
 data/
