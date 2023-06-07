@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'backup/**'
+      - 'backup/export/**'
 
 permissions: write-all
 
@@ -28,16 +28,35 @@ jobs:
             echo "::set-output name=skip::false"
           fi
 
+
       - name: Build and run Docker container
+        id: docker_command
         run: |
           skip=${{ steps.check_commit_message.outputs.skip }}
           if [ "$skip" == "false" ]; then
-            docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c "npm install -g ipfs-car && npx ipfs-car pack backup/export/ --output ipfs.car"
+            docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c '
+            npm install -g ipfs-car && 
+            npm install -g multiformats &&
+            npx ipfs-car pack backup/export/ --output ipfs.car &&
+            cid=$(npx ipfs-car roots ipfs.car) &&
+            node getCid.js $cid
+            '
+
             git config --global user.name "GitHub Actions"
             git config --global user.email "actions@github.com"
-            git add ipfs.car
-            git commit -m "Update IPFS CAR file"
-            git push
+
+            git add --all
+
+            if [[ -n "$(git status --porcelain ipfs.car ipfs.json)" ]]; then
+              git commit -m "Update IPFS CAR and JSON files" ipfs.car ipfs.json
+              git push
+            else
+              echo "No changes in ipfs.car or ipfs.json. Skipping commit."
+            fi
+
           else
             echo "Skipping Docker command."
           fi
+
+
+

@@ -105,7 +105,7 @@ Note the -- before passing options.
 ```console
 npm run sync --  --env dev --alchemy <API key>
 ```
-
+d
 ## API
 
 | Option | Default | Description | 
