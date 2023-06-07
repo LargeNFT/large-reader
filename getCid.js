@@ -5,4 +5,4 @@ let args = process.argv.slice(2);
 
 const v1 = CID.parse(args[0]);
 
-fs.writeFileSync("ipfs.json", JSON.stringify({ cid: v1.toV0().toString()}));
+fs.writeFileSync("dist/ipfs.json", JSON.stringify({ cid: v1.toV0().toString()}));
