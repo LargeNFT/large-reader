@@ -36,10 +36,12 @@ jobs:
           if [ "$skip" == "false" ]; then
             docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace node:latest sh -c '
             npm install -g ipfs-car && 
-            npm install multiformats &&
-            npx ipfs-car pack backup/export/ --output dist/ipfs.car &&
-            cid=$(npx ipfs-car roots dist/ipfs.car) &&
-            node getCid/index.js $cid
+            npx ipfs-car pack backup/export/ --output ipfs.car &&
+            cid=$(npx ipfs-car roots ipfs.car) &&
+            cd getcid &&
+            npm install && 
+            node index.js $cid &&
+            cd ..
             '
 
             git config --global user.name "GitHub Actions"

@@ -1,5 +1,8 @@
 {
   "name": "getcid",
   "version": "0.0.1",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "multiformats":"11.0.2"
+  }
 }
