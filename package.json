@@ -11,7 +11,8 @@
     "generate": "node node_modules/large-nft/public/large/generate/index.js",
     "generate:dev": "node node_modules/large-nft/public/large/generate/index.js --env dev",
     "sync": "node --no-experimental-fetch node_modules/large-nft/public/large/sync/index.js",
-    "start": "node --no-experimental-fetch node_modules/large-nft/public/large/start.js"
+    "start": "node --no-experimental-fetch node_modules/large-nft/public/large/start.js",
+    "publish": "node node_modules/large-nft/public/large/admin/publish.js"
   },
   "keywords": [],
   "author": "Patrick Toner",
@@ -27,7 +28,8 @@
     "@fastify/static": "6.8.0",
     "convert-svg-to-png": "0.6.4",
     "sharp": "0.31.3",
+    "pouchdb-node": "8.0.1",
 
-    "large-nft": "^0.16.0"
+    "large-nft": "^0.15.0"
   }
 }
