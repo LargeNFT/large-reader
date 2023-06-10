@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'backup/export/**'
+      - '.upload/**'
 
 permissions: write-all
 
