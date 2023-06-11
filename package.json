@@ -30,6 +30,6 @@
     "sharp": "0.31.3",
     "pouchdb-node": "8.0.1",
 
-    "large-nft": "^0.15.0"
+    "large-nft": "^0.16.0"
   }
 }
