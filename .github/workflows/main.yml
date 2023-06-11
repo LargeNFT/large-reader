@@ -46,6 +46,7 @@ jobs:
 
             npm install
             npm run publish
+            npm run generate
 
             rm kubo_v0.20.0_linux-amd64.tar.gz
             rm -r kubo
