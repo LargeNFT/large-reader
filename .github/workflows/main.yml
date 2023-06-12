@@ -68,6 +68,7 @@ jobs:
 
 
       - name: Deploy to GitHub Pages
+        if: steps.check_commit_message.outputs.skip != 'true'
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
