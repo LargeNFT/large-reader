@@ -20,6 +20,13 @@ before_script:
 build:
   stage: build
   script:
+    - commit_message=$(git log --format=%B -n 1 $CI_COMMIT_SHA)
+    - echo "$commit_message"
+    - >
+      if echo "$commit_message" | grep -q "Deleting .upload"; then
+        echo "Commit message contains 'Deleting .upload'. Skipping build and deploy."
+        exit 0
+      fi
     - npm install
     - npm run publish
     - npm run generate
@@ -30,3 +37,17 @@ build:
     - git add --all
     - git commit -m "Update IPFS CAR and JSON files" || echo "No changes to commit"
     - git push
+
+deploy:
+  stage: deploy
+  script:
+    - >
+      if echo "$commit_message" | grep -q "Deleting .upload"; then
+        echo "Commit message contains 'Deleting .upload'. Skipping deploy."
+        exit 0
+      fi
+    - apt-get install -y rsync
+    - rsync -avz --delete public/ $CI_PROJECT_DIR/public/
+  artifacts:
+    paths:
+      - public
