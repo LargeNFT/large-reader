@@ -1,0 +1,32 @@
+image: ubuntu:latest
+
+stages:
+  - build
+  - deploy
+
+variables:
+  IPFS_VERSION: v0.20.0
+
+before_script:
+  - apt-get update && apt-get install -y wget tar
+  - wget https://dist.ipfs.tech/kubo/${IPFS_VERSION}/kubo_${IPFS_VERSION}_linux-amd64.tar.gz
+  - tar -xvzf kubo_${IPFS_VERSION}_linux-amd64.tar.gz
+  - cd kubo
+  - ./install.sh
+  - cd ..
+  - ipfs init
+  - ipfs daemon &
+
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run publish
+    - npm run generate
+    - rm kubo_${IPFS_VERSION}_linux-amd64.tar.gz
+    - rm -r kubo
+    - git config --global user.name "GitLab CI/CD"
+    - git config --global user.email "gitlab@ci-cd.com"
+    - git add --all
+    - git commit -m "Update IPFS CAR and JSON files" || echo "No changes to commit"
+    - git push
