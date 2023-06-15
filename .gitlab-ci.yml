@@ -7,17 +7,6 @@ stages:
 variables:
   IPFS_VERSION: v0.20.0
 
-before_script:
-  - apt-get update && apt-get install -y wget tar
-  - wget https://dist.ipfs.tech/kubo/${IPFS_VERSION}/kubo_${IPFS_VERSION}_linux-amd64.tar.gz
-  - tar -xvzf kubo_${IPFS_VERSION}_linux-amd64.tar.gz
-  - cd kubo
-  - ./install.sh
-  - cd ..
-  - ipfs init
-  - ipfs daemon &
-
-
 
 
 pages:
@@ -25,16 +14,27 @@ pages:
   script:
     - commit_message=$(git log --format=%B -n 1 $CI_COMMIT_SHA)
     - echo "$commit_message"
-    - >
+    - |
       if echo "$commit_message" | grep -q "Deleting .upload"; then
         echo "Commit message contains 'Deleting .upload'. Skipping build and deploy."
         exit 0
       fi
+
+    - apt-get update && apt-get install -y wget tar
+    - wget https://dist.ipfs.tech/kubo/${IPFS_VERSION}/kubo_${IPFS_VERSION}_linux-amd64.tar.gz
+    - tar -xvzf kubo_${IPFS_VERSION}_linux-amd64.tar.gz
+    - cd kubo
+    - ./install.sh
+    - cd ..
+    - ipfs init
+    - ipfs daemon &
+
+
     - npm install
     - npm run publish
     - npm run generate
+
   artifacts:
     paths:
       - public
       - ipfs
-      - large-config.json
