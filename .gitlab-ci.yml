@@ -15,8 +15,8 @@ pages:
     - commit_message=$(git log --format=%B -n 1 $CI_COMMIT_SHA)
     - echo "$commit_message"
     - |
-      if echo "$commit_message" | grep -vq "Committing reader data complete"; then
-        echo "Commit message does not contain 'Committing reader data complete'. Skipping build and deploy."
+      if echo "$commit_message" | grep -vq "complete"; then
+        echo "Commit message does not contain 'complete'. Skipping build and deploy."
         exit 0
       fi
 

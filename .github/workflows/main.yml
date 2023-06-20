@@ -13,7 +13,7 @@ jobs:
   docker_command:
     runs-on: ubuntu-latest
 
-    if: "contains(github.event.head_commit.message, 'Committing reader data complete')"
+    if: "contains(github.event.head_commit.message, 'complete')"
 
     steps:
       - name: Checkout repository
