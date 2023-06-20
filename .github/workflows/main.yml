@@ -13,6 +13,8 @@ jobs:
   docker_command:
     runs-on: ubuntu-latest
 
+    if: "contains(github.event.head_commit.message, 'Committing reader data complete')"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -20,6 +22,7 @@ jobs:
       - name: Build and run Docker container
         id: docker_command
         run: |
+
             wget https://dist.ipfs.tech/kubo/v0.20.0/kubo_v0.20.0_linux-amd64.tar.gz
             tar -xvzf kubo_v0.20.0_linux-amd64.tar.gz
             cd kubo
