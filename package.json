@@ -32,6 +32,6 @@
     "pouchdb-node": "8.0.1",
     "ipfs-http-client": "60.0.0",
 
-    "large-nft": "^0.16.0"
+    "large-nft": "latest"
   }
 }
